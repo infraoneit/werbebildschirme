@@ -1,26 +1,33 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ==== Brand ==== */
+:root{
+  --infra-ink:#0f172a;
+  --infra-green:#2CC14D;   /* heller */
+  --infra-green2:#159C3A;  /* dunkler */
+  --radius:22px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* Base */
+body{ background:#f6f8fb; color:var(--infra-ink); font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Inter,Arial,sans-serif }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* ===== Premium Buttons ===== */
+.btn{ display:inline-flex; align-items:center; justify-content:center; gap:.5rem; height:46px; padding:0 20px; border-radius:12px; font-weight:700; transition:all .15s ease }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Primär: kräftiger Grün-Verlauf + Glow */
+.btn-primary{
+  color:#fff;
+  background-image:linear-gradient(135deg,var(--infra-green),var(--infra-green2));
+  box-shadow:0 10px 24px rgba(21,156,58,.28), inset 0 1px 0 rgba(255,255,255,.35);
 }
+.btn-primary:hover{ filter:brightness(1.06); transform:translateY(-1px) }
+.btn-primary:active{ transform:translateY(0) }
+
+/* Sekundär: weißer Button, dunkler Text (immer sichtbar) */
+.btn-secondary{
+  color:#0f172a;
+  background:#fff;
+  border:2px solid rgba(15,23,42,.15);
+  box-shadow:0 8px 18px rgba(15,23,42,.08);
+}
+.btn-secondary:hover{ background:#f7fafc; transform:translateY(-1px) }

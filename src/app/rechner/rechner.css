@@ -1,0 +1,78 @@
+/* >>> nur unter .rechner wirksam <<< */
+.rechner *{box-sizing:border-box}
+.rechner{
+  --ink:#0f172a; --muted:#64748b;
+  --green:#2CC14D; --green2:#159C3A; --red:#D72027;
+}
+
+/* Canvas: grüner Verlauf mit rotem Hauch + dezentes Seitenmuster */
+.rechner{
+  min-height:100vh;
+  background:
+    radial-gradient(1200px 400px at 50% -120px, rgba(215,32,39,.10), transparent 60%),
+    linear-gradient(180deg, #e3f8ea 0%, #fdfefe 50%, #ffffff 100%),
+    repeating-linear-gradient(90deg, rgba(15,23,42,.03) 0 2px, transparent 2px 10px);
+}
+.rechner .wrap{max-width:88rem;margin-inline:auto;padding:1.25rem}
+
+/* Headings/Texts */
+.rechner .heading{color:var(--ink)}
+.rechner .muted{color:var(--muted)}
+
+/* Cards & Panels */
+.rechner .card{border:1px solid #e5e7eb;background:#fff;border-radius:18px;box-shadow:0 8px 22px rgba(0,0,0,.06)}
+.rechner .panel{border:1px solid #e5e7eb;background:rgba(255,255,255,.98);border-radius:18px;padding:1rem}
+.rechner .badge{display:inline-block;padding:.25rem .6rem;border-radius:999px;font-weight:800;font-size:.8rem;background:#E8F9EA;color:#0E7F1C;border:1px solid #CFF3D4}
+
+/* Buttons */
+.rechner .btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;padding:.8rem 1.15rem;border-radius:12px;font-weight:800;transition:.15s}
+.rechner .btn-primary{color:#fff;background:linear-gradient(135deg,var(--green),var(--green2));box-shadow:0 12px 26px rgba(21,156,58,.26)}
+.rechner .btn-primary:hover{filter:brightness(1.05);transform:translateY(-1px)}
+.rechner .btn-ghost{color:var(--ink);background:#fff;border:2px solid rgba(15,23,42,.14)}
+.rechner .btn-danger{color:#fff;background:var(--red)}
+
+/* Stepper */
+.rechner .stepper{display:flex;gap:.6rem;flex-wrap:wrap}
+.rechner .step{display:flex;align-items:center;gap:.5rem;padding:.55rem .9rem;border-radius:14px;border:1px solid #e5e7eb;background:#fff}
+.rechner .step.is-active{outline:2px solid var(--green);background:#EAFBF0}
+
+/* Lightbox für Modellbilder */
+.rechner .lb-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.6);display:grid;place-items:center;z-index:80}
+.rechner .lb-img{max-width:92vw;max-height:92vh;border-radius:14px;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+
+/* Tabellen */
+.rechner table{width:100%;border-collapse:collapse}
+.rechner th,.rechner td{padding:.6rem;border-bottom:1px solid #e5e7eb;text-align:left}
+.rechner th{background:#f8fafc;font-weight:800}
+
+/* Formularfelder */
+.rechner .form-grid{display:grid;gap:.75rem}
+@media (min-width:640px){ .rechner .form-grid-2{grid-template-columns:1fr 1fr} }
+.rechner input, .rechner textarea, .rechner select{
+  width:100%;border:1px solid #e5e7eb;border-radius:12px;padding:.6rem .8rem;background:#fff
+}
+.rechner input:focus, .rechner textarea:focus, .rechner select:focus{
+  outline:2px solid rgba(44,193,77,.25)
+}
+
+/* Checkbox-Reihen (Bestellformular) */
+.rechner .checkrow{
+  display:grid; gap:.75rem;
+}
+@media (min-width:640px){
+  .rechner .checkrow{grid-template-columns:1fr 1fr}
+}
+.rechner .checklabel{
+  display:flex; align-items:center; gap:.5rem; border:1px dashed #e5e7eb; padding:.6rem .8rem; border-radius:12px; background:#fff;
+}
+.rechner .checklabel input{width:auto}
+
+/* AGB-Zeile */
+.rechner .agb{
+  display:flex; align-items:center; gap:.6rem;
+}
+.rechner .agb input{width:auto}
+.rechner .agb a{color:#0f172a;text-decoration:underline}
+
+/* Fehlermeldung */
+.rechner .error{color:var(--red);font-weight:800}

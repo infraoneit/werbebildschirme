@@ -1,0 +1,21 @@
+[build]
+  command = "pnpm build"
+  publish = ".next"
+
+# Next.js-Unterstützung (SSR/ISR/Routing etc.)
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# (Optional) eigene Functions – falls du sie nutzt
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# (Optional) Security-/Routing-Header – kannst du später erweitern
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    X-XSS-Protection = "0"
