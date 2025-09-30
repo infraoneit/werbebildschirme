@@ -1,68 +1,119 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+// pdf.js
+import {
+  GlobalWorkerOptions,
+  getDocument,
+  type PDFDocumentProxy,
+} from "pdfjs-dist";
 
-// pdfjs worker konfigurieren
-import { GlobalWorkerOptions, getDocument, PDFDocumentProxy } from "pdfjs-dist";
+// Worker setzen (CDN wie bei dir)
 GlobalWorkerOptions.workerSrc =
   typeof window !== "undefined"
-    ? `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.6.82/pdf.worker.min.js`
+    ? "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.6.82/pdf.worker.min.js"
     : "";
 
 type Props = {
-  src: string;          // /pdf/…pfad in public
+  /** Pfad unter /public, z. B. "/pdf/datenblatt123.pdf" */
+  src: string;
   alt: string;
-  className?: string;   // z.B. "h-48 w-full"
-  scale?: number;       // optional, default 1
+  className?: string; // z.B. "h-48 w-full"
+  /** Render-Skalierung, Standard 1.0 */
+  scale?: number;
 };
 
-export default function PdfThumb({ src, alt, className, scale = 1 }: Props) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [error, setError] = useState<string | null>(null);
+export default function PdfThumb({
+  src,
+  alt,
+  className,
+  scale = 1,
+}: Props) {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [state, setState] = useState<"idle" | "loading" | "ok" | "error">("idle");
 
   useEffect(() => {
     let mounted = true;
-    (async () => {
-      try {
-        const loadingTask = getDocument(src);
-        const pdf: PDFDocumentProxy = await loadingTask.promise;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    setState("loading");
+
+    // pdf.js Laden
+    const task = getDocument(src);
+    task.promise
+      .then(async (pdf: PDFDocumentProxy) => {
+        if (!mounted) return;
+        // Erste Seite
+        const page = await pdf.getPage(1);
         if (!mounted) return;
 
-        const page = await pdf.getPage(1);
-        const viewport = page.getViewport({ scale: 1.0 * scale });
-        const canvas = canvasRef.current;
-        if (!canvas) return;
-        const context = canvas.getContext("2d");
-        if (!context) return;
+        const viewport = page.getViewport({ scale });
+        // Canvas Größe setzen (HiDPI)
+        const ratio = typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1;
+        canvas.width = Math.floor(viewport.width * ratio);
+        canvas.height = Math.floor(viewport.height * ratio);
+        canvas.style.width = `${Math.floor(viewport.width)}px`;
+        canvas.style.height = `${Math.floor(viewport.height)}px`;
 
-        // Responsive Breite: wir passen die Breite der Card an
-        // Canvasgröße auf Containerbreite skalieren
-        const ratio = viewport.width / viewport.height;
-        const width = canvas.parentElement?.clientWidth ?? viewport.width;
-        const height = width / ratio;
+        const renderContext = {
+          canvasContext: ctx,
+          viewport: page.getViewport({ scale: scale * ratio }),
+        };
 
-        canvas.width = Math.floor(width);
-        canvas.height = Math.floor(height);
+        await page.render(renderContext as any).promise;
+        if (mounted) setState("ok");
+      })
+      .catch(() => {
+        if (mounted) setState("error");
+      });
 
-        const renderViewport = page.getViewport({
-          scale: (width / viewport.width) * scale,
-        });
-
-        await page.render({
-          canvasContext: context,
-          viewport: renderViewport,
-        }).promise;
-      } catch (e) {
-        setError("Preview not available");
-      }
-    })();
-    return () => { mounted = false; };
+    return () => {
+      mounted = false;
+      // pdf.js selbst cleaned seine Worker/Tasks – hier kein extra Abort nötig
+    };
   }, [src, scale]);
 
-  if (error) {
+  if (state === "loading") {
     return (
-      <div className={`grid place-items-center bg-slate-100 text-slate-500 ${className ?? ""}`}>
-        {alt}
+      <div
+        className={className}
+        aria-busy="true"
+        aria-label={`${alt} – lädt…`}
+        style={{
+          display: "block",
+          width: "100%",
+          aspectRatio: "1.414 / 1", // grob A4
+          background: "repeating-linear-gradient(45deg,#f5f5f5,#f5f5f5 10px,#eee 10px,#eee 20px)",
+          borderRadius: 8,
+        }}
+      />
+    );
+  }
+
+  if (state === "error") {
+    return (
+      <div
+        className={className}
+        role="img"
+        aria-label={`${alt} – Vorschau nicht möglich`}
+        style={{
+          display: "grid",
+          placeItems: "center",
+          width: "100%",
+          aspectRatio: "1.414 / 1",
+          background: "#f8d7da",
+          color: "#842029",
+          borderRadius: 8,
+          padding: 8,
+          fontSize: 14,
+          textAlign: "center",
+        }}
+      >
+        PDF-Vorschau konnte nicht geladen werden.
       </div>
     );
   }

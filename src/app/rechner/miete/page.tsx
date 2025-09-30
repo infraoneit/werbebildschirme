@@ -18,8 +18,39 @@ import {
 } from "../lib/pricing";
 import { DisplayKey, Interval } from "../lib/types";
 
+type Step = 1 | 2 | 3 | 4 | 5;
+
+type CustomerData = {
+  name: string;
+  email: string;
+  phone?: string;
+  company?: string;
+  address?: string;
+  sameAddr?: boolean;
+  sameMail?: boolean;
+  notes?: string;
+};
+
+type OrderPayload = {
+  type: "rent";
+  rentKind: "rentDisplays" | "ownDisplays";
+  interval: Interval;
+  simQty: number;
+  playersOnly: number;
+  qty: Record<DisplayKey, number>;
+  pricing: {
+    monthlyTotal: number;
+    yearlyTotal: number;
+    baseMonthly: number;
+    baseYear: number;
+    discount: number;
+    simMonthly: number;
+  };
+  customer: CustomerData;
+};
+
 export default function MietPage() {
-  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5>(1);
+  const [step, setStep] = useState<Step>(1);
   const [err, setErr] = useState<string>("");
 
   // 1) Art
@@ -85,7 +116,7 @@ export default function MietPage() {
       ? playersOnly > 0
       : Object.values(qty).some((v) => v > 0);
 
-  function next(to: 1 | 2 | 3 | 4 | 5) {
+  function next(to: Step) {
     setErr("");
     if (to === 2 && !canStep1) {
       setErr("Bitte zuerst eine Art wählen.");
@@ -130,7 +161,7 @@ export default function MietPage() {
     return L;
   }, [rentKind, playersOnly, qty, simQty, simMonthly]);
 
-  async function sendOrder(payload: any) {
+  async function sendOrder(payload: OrderPayload) {
     await fetch("/.netlify/functions/order", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -144,9 +175,10 @@ export default function MietPage() {
       <div className="wrap">
         {/* Kopfzeile */}
         <div className="flex justify-between items-center mb-4 gap-2">
-          <a href="/" className="btn btn-ghost">
+          {/* Fix: <a> → <Link> */}
+          <Link href="/" className="btn btn-ghost">
             ← Zurück zur Website
-          </a>
+          </Link>
           <div className="flex items-center gap-2">
             <Link
               href="/displays/"
@@ -172,7 +204,7 @@ export default function MietPage() {
             <Stepper
               steps={["Art", "Abrechnung", "Mengen", "Übersicht", "Bestellung"]}
               active={step}
-              goto={(n) => setStep(n as any)}
+              goto={(n: number) => setStep(n as Step)}
             />
             {err && <p className="error mt-2">{err}</p>}
 
@@ -394,10 +426,10 @@ export default function MietPage() {
                       ? `${chf(monthlyTotal)}/Monat`
                       : `${chf(yearlyTotal)}/Jahr`
                   }
-                  onSubmitPayload={async (data) => {
+                  onSubmitPayload={async (data: CustomerData) => {
                     await sendOrder({
                       type: "rent",
-                      rentKind,
+                      rentKind: rentKind as "rentDisplays" | "ownDisplays",
                       interval,
                       simQty,
                       playersOnly,

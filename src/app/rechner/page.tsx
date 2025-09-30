@@ -1,40 +1,57 @@
-import Link from "next/link";
-import "./rechner.css";
+"use client";
 
-export default function Hub(){
+import Link from "next/link";
+import "../rechner.css";
+
+export default function RechnerHub() {
   return (
     <main className="rechner">
       <div className="wrap">
-        <div className="flex justify-between items-center gap-2 mb-6">
-          <a href="/" className="btn btn-ghost">← Zurück zur Website</a>
-          <Link href="/displays/" target="_blank" className="btn btn-ghost">Displays ansehen</Link>
+        <div className="flex justify-between items-center mb-4 gap-2">
+          {/* Fix: <a> → <Link> */}
+          <Link href="/" className="btn btn-ghost">← Zurück zur Website</Link>
+          <div className="flex items-center gap-2">
+            <Link href="/displays/" target="_blank" rel="noopener" className="btn btn-ghost">
+              Displays ansehen
+            </Link>
+          </div>
         </div>
 
-        <div className="grid lg:grid-cols-[2fr_1fr] gap-6 items-center">
-          <div className="panel">
-            <div className="flex items-center gap-3">
-              <img src="/images/logo.png" alt="Infraone" width={120} height={40} />
-              <span className="badge">Kostenrechner</span>
-            </div>
-            <h1 className="heading text-3xl font-black mt-2">Wähle deinen Rechner</h1>
-            <p className="muted">Transparente Kalkulation – **Miete** mit 5 % Jahresrabatt auf Geräte/Player oder
-              **lokale Kauf-Lösung** mit optionalen Displays. Ergebnisse kannst du direkt bestellen.</p>
+        <h1 className="heading text-3xl font-black">Kostenrechner</h1>
+        <p className="muted">Wähle dein Modell: Mietlösung oder lokale Kauf-Variante.</p>
 
-            <div className="mt-4 flex flex-wrap gap-3">
-              <Link href="/rechner/miete" className="btn btn-primary">Miet-Rechner öffnen</Link>
-              <Link href="/rechner/lokal" className="btn btn-ghost">Lokaler Rechner öffnen</Link>
+        <section className="grid sm:grid-cols-2 gap-3 mt-4">
+          <Link href="/rechner/miete" className="panel no-underline hover:ring-2 ring-emerald-600">
+            <h2 className="m-0 text-xl font-extrabold">Miet-Rechner</h2>
+            <p className="muted mt-1">
+              Displays mieten oder eigene Displays nutzen – mit Player-Abo. Optional SIM.
+            </p>
+            <div className="mt-2">
+              <span className="btn btn-primary">Öffnen</span>
             </div>
-          </div>
+          </Link>
 
+          <Link href="/rechner/lokal" className="panel no-underline hover:ring-2 ring-emerald-600">
+            <h2 className="m-0 text-xl font-extrabold">Lokal-Rechner (Kauf)</h2>
+            <p className="muted mt-1">
+              Server &amp; Player einmalig kaufen, optional Displays. Optional SIM pro Player.
+            </p>
+            <div className="mt-2">
+              <span className="btn btn-primary">Öffnen</span>
+            </div>
+          </Link>
+        </section>
+
+        <section className="grid gap-2 mt-6">
           <div className="panel">
-            <h3 className="m-0 text-lg font-extrabold">Hinweise</h3>
-            <ul className="muted mt-2" style={{paddingLeft:"1.1rem"}}>
-              <li>SIM-Karten optional (monatlich) und separat ausgewiesen.</li>
-              <li>Jahreszahlung: −5 % auf Geräte/Player (nicht auf SIM).</li>
-              <li>Eigene Displays? Player-Abo CHF 25/Monat verfügbar.</li>
+            <strong>Hinweise</strong>
+            <ul className="list-disc pl-5 mt-2 text-sm text-slate-700">
+              <li>Bei jährlicher Zahlung im Mietmodell: 5&nbsp;% Rabatt auf Geräte/Player.</li>
+              <li>SIM-Karten optional: CHF 10.– / Monat pro Player.</li>
+              <li>Alle Preise in CHF, exkl. MwSt.</li>
             </ul>
           </div>
-        </div>
+        </section>
       </div>
     </main>
   );

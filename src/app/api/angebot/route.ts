@@ -1,38 +1,56 @@
 // src/app/api/angebot/route.ts
 import { NextRequest } from "next/server";
 
+type Customer = {
+  name: string;
+  email: string;
+  phone?: string;
+  company?: string;
+  // optionale Zusatzfelder aus dem Formular:
+  ship_street?: string;
+  ship_city?: string;
+  bill_street?: string;
+  bill_city?: string;
+  bill_email?: string;
+  sameAddr?: boolean;
+  sameMail?: boolean;
+  message?: string;
+};
+
+type OrderBody = {
+  type: "rent" | "local";
+  interval?: "monthly" | "yearly";
+  rentKind?: "rentDisplays" | "ownDisplays" | null;
+  simQty?: number;
+  playersOnly?: number;
+  qty?: Record<string, number>;
+  pricing?: Record<string, number>;
+  customer: Customer;
+};
+
 export async function POST(req: NextRequest) {
-  const body = await req.json();
+  const body = (await req.json()) as Partial<OrderBody>;
 
-  // Beispiel-Daten aus deinem Rechner
-  const { customer, type, interval, qty, pricing } = body;
-
-  if (!customer?.name || !customer?.email) {
-    return new Response(JSON.stringify({ error: "Missing customer data" }), { status: 400 });
+  // Minimal-Validierung
+  if (!body?.customer?.name || !body?.customer?.email) {
+    return new Response(JSON.stringify({ error: "Missing customer name/email" }), { status: 400 });
   }
 
-  // 📨 E-Mail-Inhalt zusammenbauen
-  const html = `
-    <h2>Neue Anfrage von werbebildschirme.ch</h2>
-    <p><b>Name:</b> ${customer.name}</p>
-    <p><b>E-Mail:</b> ${customer.email}</p>
-    ${customer.phone ? `<p><b>Telefon:</b> ${customer.phone}</p>` : ""}
-    ${customer.company ? `<p><b>Firma:</b> ${customer.company}</p>` : ""}
-    <hr/>
-    <p><b>Modell:</b> ${type === "miete" ? "Miete" : "Lokal"} (${interval ?? "-"})</p>
-    <pre>${JSON.stringify(qty, null, 2)}</pre>
-    <h3>Summen</h3>
-    <pre>${JSON.stringify(pricing, null, 2)}</pre>
-  `;
-
-  // 🚨 Hier rufen wir deine bestehende Netlify Function auf,
-  // die über Microsoft Graph E-Mails versendet.
-  // Einfach per Fetch an /.netlify/functions/order schicken:
-  await fetch(`${process.env.SITE_BASE_URL}/.netlify/functions/order`, {
+  // → Übergib die Daten 1:1 an die Netlify-Function, die per MS Graph E-Mails sendet
+  const res = await fetch(`${process.env.SITE_BASE_URL}/.netlify/functions/order`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
+    // kurze Timeouts verhindern ewiges Hängen, wenn lokal getestet wird
+    cache: "no-store",
   });
+
+  if (!res.ok) {
+    const text = await res.text();
+    return new Response(JSON.stringify({ ok: false, error: text || `HTTP ${res.status}` }), {
+      status: 500,
+    });
+  }
 
   return new Response(JSON.stringify({ ok: true }), { status: 200 });
 }

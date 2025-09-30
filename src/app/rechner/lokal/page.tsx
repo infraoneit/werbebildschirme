@@ -14,60 +14,104 @@ import {
 } from "../lib/pricing";
 import { DisplayKey } from "../lib/types";
 
-export default function LokalPage(){
-  const [step,setStep]=useState<1|2|3|4>(1);
-  const [err,setErr]=useState("");
+type Step = 1 | 2 | 3 | 4;
 
-  const [servers,setServers]=useState(1);
-  const [players,setPlayers]=useState(1);
-  const [simQty,setSimQty]=useState(0);
+type QtyMap = Record<DisplayKey, number>;
 
-  const [qty,setQty]=useState<Record<DisplayKey,number>>({
-    indoor43:0, indoor55:0, indoor65:0, outdoor43:0, outdoor55:0, outdoor75:0,
-    stretched37:0, videowall55:0, totem55:0
+type CustomerData = {
+  name: string;
+  email: string;
+  phone?: string;
+  company?: string;
+  address?: string;
+  sameAddr?: boolean;
+  sameMail?: boolean;
+  notes?: string;
+};
+
+type OrderPayload = {
+  type: "local";
+  servers: number;
+  players: number;
+  simQty: number;
+  qty: QtyMap;
+  pricing: {
+    onceTotal: number;
+    serverOnce: number;
+    playerOnce: number;
+    displaysBuyOnce: number;
+    simMonthly: number;
+    STARTER_FIX: number;
+  };
+  customer: CustomerData;
+};
+
+export default function LokalPage() {
+  const [step, setStep] = useState<Step>(1);
+  const [err, setErr] = useState("");
+
+  const [servers, setServers] = useState(1);
+  const [players, setPlayers] = useState(1);
+  const [simQty, setSimQty] = useState(0);
+
+  const [qty, setQty] = useState<QtyMap>({
+    indoor43: 0, indoor55: 0, indoor65: 0, outdoor43: 0, outdoor55: 0, outdoor75: 0,
+    stretched37: 0, videowall55: 0, totem55: 0
   });
 
-  const displaysBuyOnce = useMemo(()=> BUY_MODELS.reduce((s,m)=> s + (qty[m.key]||0)*m.priceBuy, 0), [qty]);
-  const displaysLines   = BUY_MODELS
-    .filter(m => (qty[m.key]||0) > 0)
-    .map(m => ({ k:`${m.label} × ${qty[m.key]}`, v: chf((qty[m.key]||0)*m.priceBuy) }));
+  const displaysBuyOnce = useMemo(
+    () => BUY_MODELS.reduce((s, m) => s + (qty[m.key] || 0) * m.priceBuy, 0),
+    [qty]
+  );
 
-  const serverOnce  = servers * PRICE_SERVER_UNIT;
-  const playerOnce  = players * PRICE_PLAYER_LOCAL;
-  const simMonthly  = simQty * PRICE_SIM_MONTH;
+  const displaysLines = BUY_MODELS
+    .filter(m => (qty[m.key] || 0) > 0)
+    .map(m => ({ k: `${m.label} × ${qty[m.key]}`, v: chf((qty[m.key] || 0) * m.priceBuy) }));
 
-  const useStarter  = (servers===1 && players===1 && displaysBuyOnce===0);
-  const onceTotal   = useStarter ? STARTER_FIX : (serverOnce + playerOnce + displaysBuyOnce);
+  const serverOnce = servers * PRICE_SERVER_UNIT;
+  const playerOnce = players * PRICE_PLAYER_LOCAL;
+  const simMonthly = simQty * PRICE_SIM_MONTH;
 
-  function next(to:1|2|3|4){
+  const useStarter = (servers === 1 && players === 1 && displaysBuyOnce === 0);
+  const onceTotal = useStarter ? STARTER_FIX : (serverOnce + playerOnce + displaysBuyOnce);
+
+  function gotoStep(n: Step) {
     setErr("");
-    if(to===2 && (servers<1 || players<1)){ setErr("Bitte gültige Kapazität wählen."); return; }
-    setStep(to);
+    if (n === 2 && (servers < 1 || players < 1)) {
+      setErr("Bitte gültige Kapazität wählen.");
+      return;
+    }
+    setStep(n);
   }
 
-  async function sendOrder(payload:any){
-    await fetch("/.netlify/functions/order",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
+  async function sendOrder(payload: OrderPayload) {
+    await fetch("/.netlify/functions/order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
     alert("Danke! Wir melden uns mit einer Bestätigung.");
   }
 
-  const tableRows = [
+  const tableRows: Array<{ k: string; v: string }> = [
     useStarter
-      ? {k:"Starter-Paket (Fix)", v: chf(STARTER_FIX)}
-      : {k:`CMS-Server × ${servers} / Player × ${players}`, v: chf(serverOnce + playerOnce)},
+      ? { k: "Starter-Paket (Fix)", v: chf(STARTER_FIX) }
+      : { k: `CMS-Server × ${servers} / Player × ${players}`, v: chf(serverOnce + playerOnce) },
     ...displaysLines,
-    ...(simQty>0 ? [{k:"SIM (monatlich)", v: `${chf(simMonthly)}/Monat`}] : []),
-    {k:"Einmalig gesamt", v: chf(onceTotal)}
+    ...(simQty > 0 ? [{ k: "SIM (monatlich)", v: `${chf(simMonthly)}/Monat` }] : []),
+    { k: "Einmalig gesamt", v: chf(onceTotal) }
   ];
 
-  const costLines = [
-    ...(simQty>0 ? [{k:"SIM monatlich", v:`${chf(simMonthly)}/Mon.`}] : []),
+  const costLines: Array<{ k: string; v: string }> = [
+    ...(simQty > 0 ? [{ k: "SIM monatlich", v: `${chf(simMonthly)}/Mon.` }] : []),
   ];
 
   return (
     <main className="rechner">
       <div className="wrap">
         <div className="flex justify-between items-center mb-4 gap-2">
-          <a href="/" className="btn btn-ghost">← Zurück zur Website</a>
+          {/* ← Fix: <a> → <Link> */}
+          <Link href="/" className="btn btn-ghost">← Zurück zur Website</Link>
           <div className="flex items-center gap-2">
             <Link href="/displays/" target="_blank" rel="noopener" className="btn btn-ghost">Displays ansehen</Link>
             <Link href="/rechner/miete" className="btn btn-ghost">Zum Miet-Rechner</Link>
@@ -79,87 +123,103 @@ export default function LokalPage(){
 
         <div className="grid lg:grid-cols-[1fr_320px] gap-4 mt-4">
           <div>
-            <Stepper steps={["Kapazität","Displays","Übersicht","Bestellung"]} active={step} goto={(n)=>setStep(n as any)} />
+            <Stepper
+              steps={["Kapazität", "Displays", "Übersicht", "Bestellung"]}
+              active={step}
+              goto={(n) => gotoStep(n as Step)}
+            />
             {err && <p className="error mt-2">{err}</p>}
 
-            {step===1 && (
+            {step === 1 && (
               <section className="grid gap-3 mt-3">
                 <div className="panel">
                   <h2 className="m-0 text-xl font-extrabold">Kapazität</h2>
                   <p className="muted text-sm">Server-Einheiten frei wählbar. 1 Player je Display.</p>
                   <div className="grid sm:grid-cols-2 gap-3 mt-2">
-                    <label> CMS-Server (à CHF {PRICE_SERVER_UNIT}) <div className="mt-2"><Counter value={servers} onChange={(v)=>setServers(Math.max(1,v))} min={1} /></div></label>
-                    <label> Player (à CHF {PRICE_PLAYER_LOCAL}) <div className="mt-2"><Counter value={players} onChange={(v)=>setPlayers(Math.max(1,v))} min={1} /></div></label>
+                    <label> CMS-Server (à CHF {PRICE_SERVER_UNIT})
+                      <div className="mt-2">
+                        <Counter value={servers} onChange={(v) => setServers(Math.max(1, v))} min={1} />
+                      </div>
+                    </label>
+                    <label> Player (à CHF {PRICE_PLAYER_LOCAL})
+                      <div className="mt-2">
+                        <Counter value={players} onChange={(v) => setPlayers(Math.max(1, v))} min={1} />
+                      </div>
+                    </label>
                   </div>
                 </div>
 
                 <label className="panel">
                   <span className="font-semibold">SIM-Karten (optional, monatlich)</span>
                   <div className="mt-2 flex items-center justify-between">
-                    <Counter value={simQty} onChange={(v)=> setSimQty(Math.max(0,v))} />
+                    <Counter value={simQty} onChange={(v) => setSimQty(Math.max(0, v))} />
                     <span className="muted text-sm">CHF {PRICE_SIM_MONTH}.–/Monat je SIM</span>
                   </div>
                 </label>
 
                 <div className="flex justify-between">
-                  <button className="btn btn-ghost" onClick={()=>history.back()}>Zurück</button>
-                  <button className="btn btn-primary" onClick={()=> next(2)}>Weiter</button>
+                  <button className="btn btn-ghost" onClick={() => history.back()}>Zurück</button>
+                  <button className="btn btn-primary" onClick={() => gotoStep(2)}>Weiter</button>
                 </div>
               </section>
             )}
 
-            {step===2 && (
+            {step === 2 && (
               <section className="grid gap-3 mt-3">
                 <h2 className="m-0 text-xl font-extrabold">Displays (Kauf, optional)</h2>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                  {BUY_MODELS.map(m=>(
-                    <ModelCard key={m.key}
+                  {BUY_MODELS.map(m => (
+                    <ModelCard
+                      key={m.key}
                       title={m.label}
                       price={`${chf(m.priceBuy)} (Kauf)`}
                       qty={qty[m.key]}
-                      setQty={(n)=> setQty(p=>({ ...p, [m.key]:Math.max(0,n) }))}
+                      setQty={(n) => setQty(p => ({ ...p, [m.key]: Math.max(0, n) }))}
                       imgSrc={MODEL_IMAGES[m.key]}
                     />
                   ))}
                 </div>
                 <div className="flex justify-between">
-                  <button className="btn btn-ghost" onClick={()=>setStep(1)}>Zurück</button>
-                  <button className="btn btn-primary" onClick={()=> setStep(3)}>Weiter</button>
+                  <button className="btn btn-ghost" onClick={() => setStep(1)}>Zurück</button>
+                  <button className="btn btn-primary" onClick={() => setStep(3)}>Weiter</button>
                 </div>
               </section>
             )}
 
-            {step===3 && (
+            {step === 3 && (
               <section className="grid gap-3 mt-3">
                 <h2 className="m-0 text-xl font-extrabold">Übersicht</h2>
                 <div className="panel">
                   <table>
                     <tbody>
-                      {tableRows.map(r=>(
-                        <tr key={r.k}><td>{r.k}</td><td style={{textAlign:"right"}}><strong>{r.v}</strong></td></tr>
+                      {tableRows.map(r => (
+                        <tr key={r.k}>
+                          <td>{r.k}</td>
+                          <td style={{ textAlign: "right" }}><strong>{r.v}</strong></td>
+                        </tr>
                       ))}
                     </tbody>
                   </table>
                 </div>
                 <div className="flex justify-between">
-                  <button className="btn btn-ghost" onClick={()=>setStep(2)}>Zurück</button>
-                  <button className="btn btn-primary" onClick={()=> setStep(4)}>Weiter</button>
+                  <button className="btn btn-ghost" onClick={() => setStep(2)}>Zurück</button>
+                  <button className="btn btn-primary" onClick={() => setStep(4)}>Weiter</button>
                 </div>
               </section>
             )}
 
-            {step===4 && (
+            {step === 4 && (
               <section className="grid gap-3 mt-3">
                 <h2 className="m-0 text-xl font-extrabold">Bestellung</h2>
                 <OrderForm
                   intervalText="einmalig"
                   amountText={`${chf(onceTotal)}.–`}
-                  onSubmitPayload={async (data)=>{
+                  onSubmitPayload={async (data: CustomerData) => {
                     await sendOrder({
-                      type:"local",
+                      type: "local",
                       servers, players, simQty, qty,
-                      pricing:{ onceTotal, serverOnce, playerOnce, displaysBuyOnce, simMonthly, STARTER_FIX },
-                      customer:data,
+                      pricing: { onceTotal, serverOnce, playerOnce, displaysBuyOnce, simMonthly, STARTER_FIX },
+                      customer: data,
                     });
                   }}
                 />
@@ -167,7 +227,7 @@ export default function LokalPage(){
             )}
           </div>
 
-          <CostBox label="Einmalig" amount={`${chf(onceTotal)}.–`} lines={costLines}/>
+          <CostBox label="Einmalig" amount={`${chf(onceTotal)}.–`} lines={costLines} />
         </div>
       </div>
     </main>
