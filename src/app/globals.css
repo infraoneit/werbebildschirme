@@ -1,33 +1,83 @@
 @import "tailwindcss";
 
 /* ==== Brand ==== */
-:root{
-  --infra-ink:#0f172a;
-  --infra-green:#2CC14D;   /* heller */
-  --infra-green2:#159C3A;  /* dunkler */
-  --radius:22px;
+:root {
+  --infra-ink: #0f172a;
+  --infra-green: #3D9646;
+  --infra-green2: #2e7d36;
+  --radius: 22px;
+
+  /* Fixed Light Mode Colors */
+  --background: #FFFFFF;
+  --section-alt: #F8F8F8;
+  --header-bg: #0A0A0A;
+  /* Black Header */
+  --foreground: #0f172a;
+  --input-bg: #ffffff;
+  --input-border: #e2e8f0;
 }
 
 /* Base */
-body{ background:#f6f8fb; color:var(--infra-ink); font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Inter,Arial,sans-serif }
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Inter, Arial, sans-serif;
+}
 
 /* ===== Premium Buttons ===== */
-.btn{ display:inline-flex; align-items:center; justify-content:center; gap:.5rem; height:46px; padding:0 20px; border-radius:12px; font-weight:700; transition:all .15s ease }
-
-/* Primär: kräftiger Grün-Verlauf + Glow */
-.btn-primary{
-  color:#fff;
-  background-image:linear-gradient(135deg,var(--infra-green),var(--infra-green2));
-  box-shadow:0 10px 24px rgba(21,156,58,.28), inset 0 1px 0 rgba(255,255,255,.35);
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  height: 46px;
+  padding: 0 20px;
+  border-radius: 12px;
+  font-weight: 700;
+  transition: all .15s ease
 }
-.btn-primary:hover{ filter:brightness(1.06); transform:translateY(-1px) }
-.btn-primary:active{ transform:translateY(0) }
+
+/* Primär: #3D9646 */
+.btn-primary {
+  color: #fff;
+  background-image: linear-gradient(135deg, var(--infra-green), var(--infra-green2));
+  box-shadow: 0 10px 24px rgba(61, 150, 70, .28), inset 0 1px 0 rgba(255, 255, 255, .35);
+}
+
+.btn-primary:hover {
+  filter: brightness(1.06);
+  transform: translateY(-1px)
+}
+
+.btn-primary:active {
+  transform: translateY(0)
+}
 
 /* Sekundär: weißer Button, dunkler Text (immer sichtbar) */
-.btn-secondary{
-  color:#0f172a;
-  background:#fff;
-  border:2px solid rgba(15,23,42,.15);
-  box-shadow:0 8px 18px rgba(15,23,42,.08);
+.btn-secondary {
+  color: var(--infra-ink);
+  background: #fff;
+  border: 2px solid rgba(15, 23, 42, .15);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, .08);
 }
-.btn-secondary:hover{ background:#f7fafc; transform:translateY(-1px) }
+
+.btn-secondary:hover {
+  background: #f7fafc;
+  transform: translateY(-1px)
+}
+
+/* Input Styles */
+.input {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  padding: 0.75rem 1rem;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.input:focus {
+  border-color: var(--infra-green);
+  box-shadow: 0 0 0 3px rgba(61, 150, 70, 0.15);
+}

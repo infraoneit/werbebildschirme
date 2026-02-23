@@ -96,7 +96,7 @@ const DISPLAYS: DisplayItem[] = [
       `55" FHD Semi-Outdoor Totem, 700 nits, freistehend, Glasfront (EOL – Restbestand, ca. 12 Stk.)`,
     pdf: "/pdf/PF-55H_DS_PF5H00_V013_20150731.pdf",
     thumb: "/images/previews/pf-55h.webp",
-    price: "CHF 3’388.– inkl. 8.1% MwSt."
+    price: "Preis auf Anfrage"
   },
   {
     key: "osp",
@@ -116,47 +116,36 @@ export default function DisplaysPage() {
     <>
       <Navbar />
 
-      <main className="bg-slate-50">
+      <main className="bg-slate-50 transition-colors duration-300">
         {/* --------- HEADER: Erklärung + CTAs --------- */}
-        <section className="bg-white">
+        <section className="bg-white transition-colors duration-300">
           <div className="mx-auto max-w-screen-xl px-4 py-8 md:py-10">
             <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
               {/* Text links */}
               <div className="max-w-3xl">
-                <h1 className="m-0 text-3xl font-black md:text-4xl">Bildschirme & Modelle</h1>
+                <h1 className="m-0 text-3xl font-black md:text-4xl text-slate-900">Bildschirme & Modelle</h1>
                 <p className="m-0 mt-2 text-slate-700">
                   Hier findest du die wichtigsten Modelle für Digital-Signage in <strong>Retail</strong>, <strong>Empfang</strong>, <strong>Schaufenster</strong>,
                   <strong> Videowalls</strong> und <strong>Outdoor</strong>. Preise in CHF <strong>inkl. 8.1 % MwSt.</strong>.<br />
-                  Bestellungen laufen über unseren <em>Kostenrechner</em>: Wähle <strong>Miete</strong> (gehostetes System) oder <strong>Lokales System (Kauf)</strong>,
-                  ergänze Player/SIM und schicke die Bestellung ab.
+                  Wähle dein Modell und sende uns eine Anfrage. Wir beraten dich gerne zur passenden Lösung (Cloud oder Lokal).
                 </p>
               </div>
 
               {/* Buttons rechts (klar unterscheidbar) */}
               <div className="flex w-full flex-col items-stretch gap-2 sm:w-auto sm:flex-row">
-                <Link
-                  href="/rechner/miete"
-                  target="_blank"
-                  rel="noopener"
-                  className="inline-flex items-center justify-center rounded-xl bg-[#3C9646] px-4 py-2 font-semibold text-white hover:brightness-105"
+                <button
+                  onClick={() => window.dispatchEvent(new CustomEvent("open-consult"))}
+                  className="inline-flex items-center justify-center rounded-xl bg-[#3D9646] px-4 py-2 font-semibold text-white hover:brightness-105"
                 >
-                  Individuelles Angebot berechnen – Mietmodell
-                </Link>
-                <Link
-                  href="/rechner/lokal"
-                  target="_blank"
-                  rel="noopener"
-                  className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 font-semibold text-slate-800 hover:bg-slate-50"
-                >
-                  Individuelles Angebot berechnen – Lokales System (Kauf)
-                </Link>
+                  Beratung anfordern
+                </button>
               </div>
             </div>
 
             {/* Kleine Schritt-Erklärung */}
             <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700">
-              <strong>So funktioniert’s:</strong> Modell hier auswählen → <em>Jetzt bestellen</em> öffnet den Kostenrechner im neuen Tab →
-              dort <strong>Mengen</strong>, <strong>Abrechnung</strong> (Monat/Jahr oder Kauf) & <strong>Optionen</strong> (Player/SIM) festlegen → <strong>Bestellung absenden</strong>.
+              <strong>So funktioniert’s:</strong> Modell auswählen → <em>Anfrage senden</em> klicken →
+              wir melden uns für Details & Offerte.
             </div>
           </div>
         </section>
@@ -166,11 +155,10 @@ export default function DisplaysPage() {
           <div className="mx-auto max-w-screen-xl px-4">
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {DISPLAYS.map((d) => (
-                <article key={d.key} className="overflow-hidden rounded-2xl bg-white shadow">
+                <article key={d.key} className="overflow-hidden rounded-2xl bg-white shadow border border-slate-100">
                   {/* --- PDF-Thumbnail --- 
                      * Höhe bewusst größer, damit Hochformat-PDFs komplett reinpassen.
                      * object-contain → NICHT zuschneiden.
-                     * Oben ein weißer Verlauf (Overlay), um Logos/Balken dezent auszublenden.
                   */}
                   <div className="relative w-full">
                     <a
@@ -188,27 +176,25 @@ export default function DisplaysPage() {
                           loading="lazy"
                           decoding="async"
                         />
-                        {/* Overlay: blendet die obersten ~40px weiß aus, damit das große Hersteller-Branding nicht dominiert */}
-                        <div className="pointer-events-none absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-white to-transparent" />
                       </div>
                     </a>
                   </div>
 
                   {/* Text + Preis + Button */}
                   <div className="p-4">
-                    <h3 className="m-0 text-lg font-extrabold">{d.title}</h3>
+                    <h3 className="m-0 text-lg font-extrabold text-slate-900">{d.title}</h3>
                     <p className="m-0 mt-1 text-sm text-slate-700">{d.teaser}</p>
-                    <p className="mt-2 font-semibold text-[#3C9646]">{d.price}</p>
+                    <p className="mt-2 font-semibold text-[#3D9646]">{d.price}</p>
 
                     <div className="mt-3">
-                      <Link
-                        href="/rechner"
-                        target="_blank"
-                        rel="noopener"
-                        className="inline-flex items-center justify-center rounded-xl bg-[#3C9646] px-4 py-2 font-semibold text-white hover:brightness-105"
+                      <button
+                        onClick={() => window.dispatchEvent(new CustomEvent("open-consult", {
+                          detail: { message: `Ich interessiere mich für das Modell "${d.title}". Bitte um Kontaktaufnahme.` }
+                        }))}
+                        className="inline-flex w-full items-center justify-center rounded-xl bg-[#3D9646] px-4 py-2 font-semibold text-white hover:brightness-105"
                       >
-                        Jetzt bestellen
-                      </Link>
+                        Anfrage senden
+                      </button>
                     </div>
                   </div>
                 </article>
@@ -216,8 +202,8 @@ export default function DisplaysPage() {
             </div>
 
             {/* --------- Rückruf & Beratung (eine Box) --------- */}
-            <div className="mt-8 rounded-2xl bg-white p-6 shadow">
-              <h2 className="m-0 text-xl font-extrabold">Rückruf & Beratung</h2>
+            <div className="mt-8 rounded-2xl bg-white p-6 shadow border border-slate-100">
+              <h2 className="m-0 text-xl font-extrabold text-slate-900">Rückruf & Beratung</h2>
               <p className="m-0 mt-1 max-w-3xl text-slate-700">
                 Wir helfen bei Größe, Helligkeit (nits), Einsatz (Indoor/Semi-Outdoor/Outdoor), Montage sowie Player (Android/Windows) & CMS (z. B. Xibo).
               </p>
@@ -256,19 +242,19 @@ export default function DisplaysPage() {
                   type="text"
                   required
                   placeholder="Name*"
-                  className="w-full rounded-xl border border-slate-200 px-3 py-2 outline-none focus:ring-2 focus:ring-[#3C9646]"
+                  className="w-full rounded-xl border border-slate-200 px-3 py-2 outline-none focus:ring-2 focus:ring-[#3D9646] bg-white text-slate-900"
                 />
                 <input
                   name="phone"
                   type="tel"
                   required
                   placeholder="Telefon*"
-                  className="w-full rounded-xl border border-slate-200 px-3 py-2 outline-none focus:ring-2 focus:ring-[#3C9646]"
+                  className="w-full rounded-xl border border-slate-200 px-3 py-2 outline-none focus:ring-2 focus:ring-[#3D9646] bg-white text-slate-900"
                 />
                 <div className="sm:col-span-2 flex flex-col gap-2 sm:flex-row">
                   <button
                     type="submit"
-                    className="inline-flex w-full items-center justify-center rounded-xl bg-[#3C9646] px-4 py-2 font-semibold text-white hover:brightness-105"
+                    className="inline-flex w-full items-center justify-center rounded-xl bg-[#3D9646] px-4 py-2 font-semibold text-white hover:brightness-105"
                   >
                     Rückruf anfordern
                   </button>

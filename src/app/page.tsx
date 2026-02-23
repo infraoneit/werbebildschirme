@@ -1,7 +1,7 @@
 "use client";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import UseCases from"@/components/UseCases";
+import UseCases from "@/components/UseCases";
 import WhyUs from "@/components/WhyUs";
 import Packages from "@/components/Packages";
 import TechGrid from "@/components/TechGrid";
@@ -18,8 +18,8 @@ export default function Page() {
       <Hero />
       <UseCases />
       <WhyUs />
-      <Packages />
       <TechGrid />
+      <Packages />
       <Process />
       <FAQ />
       <CTASection />

@@ -5,153 +5,123 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="mt-10 bg-slate-900 py-8 text-white">
+    <footer className="mt-10 bg-[#0A0A0A] py-12 text-white border-t border-slate-800">
       <div className="mx-auto max-w-screen-xl px-4 md:px-6">
-        <div className="grid gap-6 md:grid-cols-4">
-          
+        <div className="grid gap-8 md:grid-cols-4">
+
           {/* Firma */}
           <div>
-            <h4 className="m-0 text-lg font-extrabold">InfraOne IT Solutions GmbH</h4>
-            <p className="m-0 text-slate-300">
-              <a
-                className="underline"
-                href="https://www.infraone.ch/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                infraone.ch
+            <h4 className="mb-4 text-lg font-extrabold">InfraOne IT Solutions GmbH</h4>
+            <p className="text-slate-300 text-sm leading-relaxed mb-4">
+              Cloud-Telefonanlagen, IT-Netzwerke & Betrieb für KMU in der Schweiz. Aktiv in Winterthur, Schaffhausen, Thurgau & gesamter Deutschschweiz.
+            </p>
+            <div className="text-slate-300 text-sm space-y-1">
+              <a className="block hover:text-white transition-colors" href="tel:0522221818">
+                Tel. 052 222 18 18
               </a>
-              <br />
-              <a className="underline" href="mailto:info@infraone.ch">
+              <a className="block hover:text-white transition-colors" href="mailto:info@infraone.ch">
                 info@infraone.ch
               </a>
-            </p>
-          </div>
+            </div>
+            <div className="mt-4 flex flex-col items-start gap-3">
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.dispatchEvent(new CustomEvent("open-consult"));
+                }}
+                className="inline-block rounded bg-[#3D9646] px-4 py-2 text-sm font-bold text-white hover:bg-[#2e7d36] transition-colors"
+              >
+                Kontaktformular öffnen
+              </a>
 
-          {/* Links (Abschnitte + Tools) */}
-          <div>
-            <h4 className="m-0 text-lg font-extrabold">Links</h4>
-            <ul className="m-0 list-none p-0 space-y-1 text-slate-300">
-              <li>
-                <AnchorLink to="vorteile" className="underline">
-                  Vorteile
-                </AnchorLink>
-              </li>
-              <li>
-                <AnchorLink to="anwendungsfaelle" className="underline">
-                  Anwendungsfälle
-                </AnchorLink>
-              </li>
-              <li>
-                <AnchorLink to="pakete" className="underline">
-                  Pakete
-                </AnchorLink>
-              </li>
-              <li>
-                <AnchorLink to="technik" className="underline">
-                  Technik
-                </AnchorLink>
-              </li>
-              <li>
-                <AnchorLink to="prozess" className="underline">
-                  Ablauf
-                </AnchorLink>
-              </li>
-              <li>
-                <AnchorLink to="faq" className="underline">
-                  FAQ
-                </AnchorLink>
-              </li>
-              <li>
-                <Link className="underline" href="/rechner">
-                  Kostenrechner
-                </Link>
-              </li>
-              <li>
-                <a
-                  className="underline"
-                  href="/whitepaper/index.html"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Whitepaper
-                </a>
-              </li>
-              <li>
-                <Link className="underline" href="/displays">
-                  Bildschirme
-                </Link>
-              </li>
-            </ul>
+            </div>
           </div>
 
           {/* Standorte */}
           <div>
-            <h4 className="m-0 text-lg font-extrabold">Standorte</h4>
-            <ul className="m-0 list-none p-0 text-slate-300">
-              <li className="mt-2">
-                <strong>Winterthur</strong>
-                <br />
-                Rudolf-Diesel-Strasse 25, 8404 Winterthur
+            <h4 className="mb-4 text-lg font-extrabold">Standorte</h4>
+            <ul className="space-y-2 text-slate-300 text-sm">
+              <li>
+                <a href="https://maps.app.goo.gl/example" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                  <strong>Winterthur (Hauptstandort)</strong>
+                </a>
               </li>
-              <li className="mt-2">
-                <strong>Schaffhausen</strong>
-                <br />
-                Solenbergstrasse 35, 8207 Schaffhausen
+              <li>
+                <a href="https://maps.app.goo.gl/example" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                  Schaffhausen
+                </a>
               </li>
-              <li className="mt-2">
-                <strong>Tägerwilen</strong>
-                <br />
-                Bahnhofstrasse 17, 8274 Tägerwilen
+              <li>
+                <a href="https://maps.app.goo.gl/example" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                  Tägerwilen
+                </a>
+              </li>
+              <li>
+                <a href="https://maps.app.goo.gl/example" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                  Kleinandelfingen
+                </a>
               </li>
             </ul>
           </div>
 
-          {/* Rechtliches */}
+          {/* Websites & Projekte */}
           <div>
-            <h4 className="m-0 text-lg font-extrabold">Rechtliches</h4>
-            <ul className="m-0 list-none p-0 text-slate-300">
+            <h4 className="mb-4 text-lg font-extrabold">Websites & Projekte</h4>
+            <ul className="space-y-2 text-slate-300 text-sm">
               <li>
-                <a
-                  className="underline"
-                  href="https://www.infraone.ch/agb"
-                  target="_blank"
-                  rel="noreferrer"
-                >
+                <a href="https://infraone.ch" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                  infraone.ch
+                </a>
+              </li>
+              <li>
+                <a href="https://cloud-telefonanlagen.ch" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                  cloud-telefonanlagen.ch
+                </a>
+              </li>
+              <li>
+                <a href="https://informatik-schweiz.ch" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                  informatik-schweiz.ch
+                </a>
+              </li>
+              <li>
+                <a href="https://informatik-support.ch" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                  informatik-support.ch
+                </a>
+              </li>
+              <li>
+                <Link href="/" className="text-white font-semibold">
+                  werbebildschirme.ch
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Rechtliches & Copyright */}
+          <div>
+            <h4 className="mb-4 text-lg font-extrabold">Rechtliches</h4>
+            <ul className="space-y-2 text-slate-300 text-sm mb-6">
+              <li>
+                <a href="https://www.infraone.ch/agb" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
                   AGB
                 </a>
               </li>
               <li>
-                <a
-                  className="underline"
-                  href="https://www.infraone.ch/impressum"
-                  target="_blank"
-                  rel="noreferrer"
-                >
+                <a href="https://www.infraone.ch/impressum" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
                   Impressum
                 </a>
               </li>
               <li>
-                <a
-                  className="underline"
-                  href="https://www.infraone.ch/datenschutz"
-                  target="_blank"
-                  rel="noreferrer"
-                >
+                <a href="https://www.infraone.ch/datenschutz" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
                   Datenschutz
                 </a>
               </li>
             </ul>
+            <div className="text-slate-400 text-xs">
+              <p className="mb-1">© 2025 – InfraOne IT Solutions GmbH</p>
+              <p>Webdesign & Realisation: InfraOne IT Solutions</p>
+            </div>
           </div>
-        </div>
-
-        <div className="mt-6 text-slate-400">
-          <p className="m-0">
-            werbebildschirme.ch ist eine Marke von InfraOne IT Solutions GmbH.
-          </p>
-          <p className="m-0">
-            Alle Preise inkl. 8.1 % MwSt. Optional: Service/SLA nach Bedarf.
-          </p>
         </div>
       </div>
     </footer>

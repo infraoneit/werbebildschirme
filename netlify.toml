@@ -19,3 +19,10 @@
     X-Content-Type-Options = "nosniff"
     X-Frame-Options = "SAMEORIGIN"
     X-XSS-Protection = "0"
+
+# Redirect for both www and non-www variants
+[[redirects]]
+  from = "/*"
+  to = "https://infraone.ch/digital-signage"
+  status = 301
+  force = true

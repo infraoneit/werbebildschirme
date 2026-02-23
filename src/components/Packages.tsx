@@ -3,7 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 
 function PackageCard({
-  title, price, period, features, ctaText, ctaHref, recommended = false,
+  title, price, period, features, ctaText, ctaHref, recommended = false, onCtaClick
 }: {
   title: string;
   price: string;
@@ -12,16 +12,17 @@ function PackageCard({
   ctaText: string;
   ctaHref: string;
   recommended?: boolean;
+  onCtaClick?: (e: React.MouseEvent) => void;
 }) {
   return (
     <article
       className={[
-        "relative flex flex-col rounded-2xl bg-white p-6 shadow",
-        recommended ? "ring-2 ring-[#3C9646]" : "",
+        "relative flex flex-col rounded-2xl bg-white p-6 shadow border border-slate-100",
+        recommended ? "ring-2 ring-[#3D9646]" : "",
       ].join(" ")}
     >
       {recommended && (
-        <div className="absolute -top-3 left-4 rounded-full bg-[#3C9646] px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-white shadow">
+        <div className="absolute -top-3 left-4 rounded-full bg-[#3D9646] px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-white shadow">
           Empfohlenes Angebot
         </div>
       )}
@@ -29,7 +30,7 @@ function PackageCard({
       <h3 className="mb-2 text-2xl font-extrabold leading-none text-[#D72027]">{title}</h3>
 
       <div className="mb-4 flex items-baseline gap-2">
-        <span className="text-3xl font-black">{price}</span>
+        <span className="text-3xl font-black text-slate-900">{price}</span>
         {period ? <span className="text-sm text-slate-500">{period}</span> : null}
       </div>
 
@@ -43,12 +44,21 @@ function PackageCard({
       </ul>
 
       <div className="mt-auto">
-        <Link
-          href={ctaHref}
-          className="inline-flex w-full items-center justify-center rounded-xl bg-[#3C9646] px-4 py-2.5 font-semibold text-white hover:brightness-105"
-        >
-          {ctaText}
-        </Link>
+        {onCtaClick ? (
+          <button
+            onClick={onCtaClick}
+            className="inline-flex w-full items-center justify-center rounded-xl bg-[#3D9646] px-4 py-2.5 font-semibold text-white hover:brightness-105"
+          >
+            {ctaText}
+          </button>
+        ) : (
+          <Link
+            href={ctaHref}
+            className="inline-flex w-full items-center justify-center rounded-xl bg-[#3D9646] px-4 py-2.5 font-semibold text-white hover:brightness-105"
+          >
+            {ctaText}
+          </Link>
+        )}
       </div>
     </article>
   );
@@ -99,7 +109,7 @@ export default function Packages() {
   }
 
   return (
-    <section id="pakete" className="py-12 md:py-16">
+    <section id="preise" className="py-12 md:py-16 scroll-mt-24">
       <div className="mx-auto max-w-screen-xl px-4 md:px-6">
         <div className="mb-6">
           <h2 className="text-3xl font-black md:text-4xl">Pakete &amp; Preise</h2>
@@ -110,64 +120,56 @@ export default function Packages() {
         </div>
 
         {/* Karten */}
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid gap-5 md:grid-cols-3 max-w-6xl mx-auto">
           <PackageCard
-            title="Starter (lokal)"
-            price="CHF 660.–"
-            features={[
-              "Mini-Server (lokal) & 1 Player",
-              "2 personalisierte Vorlagen",
-              "1h Einführung inklusive",
-              "Eigener Bildschirm möglich",
-            ]}
-            ctaText="Angebot anfordern"
-            ctaHref="/bestellen"  // -> Bestellformular
-          />
-
-        <PackageCard
-            title="Miete (gehostet)"
-            price="ab CHF 59.–"
+            title="Cloud"
+            price="ab CHF 19.–"
             period="/Monat"
             features={[
-              "Display (Indoor/Outdoor) & Player inklusive",
-              "Schweizer Hosting & Webzugriff",
-              "Vorlagen, Playlists, Zeitpläne",
-              "Vertragslaufzeit 24 Monate",
+              "Hardware (Kauf) + CMS-Abo",
+              "Zentral verwaltbar (Web)",
+              "Ideal für Filialisten",
+              "Player & Hosting inklusive",
             ]}
-            ctaText="Jetzt mieten"
-            ctaHref="/bestellen"  // -> Bestellformular
+            ctaText="Angebot anfragen"
+            ctaHref="mailto:digital-signage@infraone.ch?subject=Anfrage%20Paket%20Cloud&body=Guten%20Tag%2C%0A%0AIch%20interessiere%20mich%20f%C3%BCr%20das%20Paket%20%22Cloud%22.%20Bitte%20kontaktieren%20Sie%20mich.%0A%0AFirma%3A%20%0AName%3A%20%0ATelefon%3A%20"
             recommended
+          />
+
+          <PackageCard
+            title="Lokal"
+            price="Einmalig"
+            features={[
+              "Eigenes CMS (keine Cloud)",
+              "Mehrere Displays möglich",
+              "Keine monatlichen Kosten",
+              "Volle Kontrolle",
+              "Ideal für lokale Netzwerke"
+            ]}
+            ctaText="Angebot anfragen"
+            ctaHref="mailto:digital-signage@infraone.ch?subject=Anfrage%20Paket%20Lokal&body=Guten%20Tag%2C%0A%0AIch%20interessiere%20mich%20f%C3%BCr%20das%20Paket%20%22Lokal%22.%20Bitte%20kontaktieren%20Sie%20mich.%0A%0AFirma%3A%20%0AName%3A%20%0ATelefon%3A%20"
           />
 
           <PackageCard
             title="Enterprise"
             price="Auf Anfrage"
             features={[
-              "Filialnetze, Monitoring, SLAs",
-              "Lokal oder gehostet",
-              "Integrationen & erweiterte Vorlagen",
-              "Individuelle Betreuung",
+              "Massgeschneiderte Lösungen",
+              "Spezial-Displays (LED Walls)",
+              "Integrationen & API",
+              "Service Level Agreements",
+              "Auch als On-Premise verfügbar"
             ]}
             ctaText="Beratung buchen"
             ctaHref="#"
+            onCtaClick={(e) => {
+              e.preventDefault();
+              window.dispatchEvent(new CustomEvent("open-consult"));
+            }}
           />
         </div>
 
-        {/* Hinweis & Link zum Rechner */}
-        <div className="mt-6 rounded-2xl bg-white p-4 text-slate-700 shadow">
-          <div className="flex flex-col items-start justify-between gap-3 md:flex-row md:items-center">
-            <p className="m-0">
-              <strong>Nichts Passendes dabei?</strong> Stellen Sie sich Ihr individuelles Angebot mit unserem
-              Kostenrechner zusammen.
-            </p>
-            <Link
-              href="/rechner"
-              className="inline-flex items-center justify-center rounded-xl border border-slate-200 px-4 py-2 font-semibold hover:bg-slate-50"
-            >
-              Zum Kostenrechner
-            </Link>
-          </div>
-        </div>
+
 
         {/* Fragen zu den Paketen? (nur EIN Block) */}
         <div className="mt-8">

@@ -29,12 +29,18 @@ export default function ConsultModal() {
 
   // Modal öffnen: per Custom-Event "open-consult" oder via #beratung
   useEffect(() => {
-    const openHandler = () => setOpen(true);
-    // sauber typisieren statt any:
-    window.addEventListener("open-consult" as keyof WindowEventMap, openHandler as EventListener);
+    const openHandler = (e: Event) => {
+      setOpen(true);
+      const detail = (e as CustomEvent).detail;
+      if (detail?.message) {
+        setForm((p) => ({ ...p, notes: detail.message }));
+      }
+    };
+
+    window.addEventListener("open-consult", openHandler);
     if (typeof window !== "undefined" && window.location.hash === "#beratung") setOpen(true);
     return () => {
-      window.removeEventListener("open-consult" as keyof WindowEventMap, openHandler as EventListener);
+      window.removeEventListener("open-consult", openHandler);
     };
   }, []);
 
@@ -101,7 +107,7 @@ export default function ConsultModal() {
       onClick={close}
     >
       <div
-        className="max-w-xl w-full rounded-2xl bg-white p-5 shadow-xl"
+        className="max-w-xl w-full rounded-2xl bg-white p-5 shadow-xl force-light"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between gap-3">
@@ -173,4 +179,42 @@ export default function ConsultModal() {
               value={form.notes}
               onChange={(e) => up("notes", e.target.value)}
               className="input"
-              placehol
+              placeholder="Deine Nachricht..."
+            />
+          </label>
+
+          <label className="grid gap-1">
+            <span className="font-semibold">Terminvorschläge</span>
+            <input
+              type="text"
+              value={form.slots}
+              onChange={(e) => up("slots", e.target.value)}
+              className="input"
+              placeholder="z. B. Mo/Di Vormittag"
+            />
+          </label>
+
+          <div className="flex justify-end gap-2 mt-2">
+            <button
+              type="button"
+              className="btn btn-ghost"
+              onClick={close}
+              disabled={sending}
+            >
+              Abbrechen
+            </button>
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={sending}
+            >
+              {sending ? "Senden..." : "Anfrage absenden"}
+            </button>
+          </div>
+        </form>
+
+        {msg && <p className="mt-3 text-center font-semibold text-emerald-600">{msg}</p>}
+      </div>
+    </div>
+  );
+}

@@ -11,19 +11,60 @@ type Slide = {
 };
 
 const slides: Slide[] = [
-  { id: 1, title: "Showroom & Beratung", img: "/images/usecases/usecase1.webp", alt: "Showroom mit Digital-Signage-Display", backTitle: "Angebote live am Produkt zeigen", backText: "Neuheiten, Preise und Aktionen sofort auf Bildschirmen darstellen. Ideal für digitale Werbung im Verkaufsraum. Inhalte zentral steuern – direkt am Produkt sichtbar." },
-  { id: 2, title: "Digitale Speisekarten", img: "/images/usecases/usecase2.webp", alt: "Digitale Speisekarten in der Gastronomie", backTitle: "Menüs & Preise sofort ändern", backText: "Tagesmenüs, Allergene oder neue Angebote ohne Druckkosten einpflegen. Werbebildschirme zeigen Inhalte ansprechend und aktuell – ideal für Zusatzverkäufe." },
-  { id: 3, title: "Schaufenster & Laden", img: "/images/usecases/usecase3.webp", alt: "Schaufenster mit Display", backTitle: "Angebote klar präsentieren", backText: "Digitale Werbung in Schaufenstern oder im Laden lenkt Aufmerksamkeit auf Produkte. Aktionen/Neuheiten einfach planen und für alle Standorte ausspielen." },
-  { id: 4, title: "Empfang & Lobby", img: "/images/usecases/usecase4.webp", alt: "Empfang und Lobby mit Display", backTitle: "Besucher begrüssen & informieren", backText: "Willkommens-Nachrichten, Wegweiser oder Veranstaltungsinfos im Eingangsbereich. Sorgt für einen professionellen ersten Eindruck und entlastet das Personal." },
-  { id: 5, title: "Wartebereich", img: "/images/usecases/usecase5.webp", alt: "Wartebereich mit Infodisplay", backTitle: "Aufrufe & Hinweise klar anzeigen", backText: "Patientenaufrufe, Wartezeiten oder Service-Infos deutlich sichtbar. Moderne Boards verbessern Abläufe in Praxen, Kliniken und Apotheken." },
-  { id: 6, title: "Öffentliche Informationen", img: "/images/usecases/usecase6.webp", alt: "Öffentliche Informationen auf Display", backTitle: "Bürger-Infos einfach sichtbar", backText: "Öffnungszeiten, Baustellen, Abstimmungen oder Notfallmeldungen zentral steuern und sofort anzeigen. Transparenz & schnelle Information für Gemeinden." },
-  { id: 7, title: "Campus & Bildung", img: "/images/usecases/usecase7.webp", alt: "Campus mit Displays", backTitle: "Pläne, Räume & Sicherheit", backText: "Infoboards zeigen Stundenpläne, Raumänderungen, Mensa-Menüs oder Sicherheitshinweise. Erleichtert Orientierung und erhöht die Sicherheit." },
-  { id: 8, title: "Outdoor Displays", img: "/images/usecases/usecase8.webp", alt: "Outdoor High-Brightness Display", backTitle: "Wetterfest, hell & verbunden", backText: "Outdoor-Displays: robust, tageslichttauglich, per SIM/4G/5G angebunden. Perfekt für Gemeinden, Events und Handel." },
+  {
+    id: 1,
+    title: "Empfang & Lobby",
+    img: "/images/usecases/usecase4.webp", // New German Image
+    alt: "Empfangsdisplay mit Live-Daten",
+    backTitle: "Der erste Eindruck zählt",
+    backText: "Begrüssen Sie Ihre Gäste professionell und modern mit einem digitalen Empfangsbildschirm. Zeigen Sie vollautomatisch die nächsten Bus-Abfahrten, das aktuelle Wetter oder die Live-Leistung Ihrer Solaranlage an. Ein smartes Display im Eingangsbereich schafft sofortiges Vertrauen, verkürzt gefühlte Wartezeiten und entlastet Ihr Empfangspersonal spürbar von wiederkehrenden Standardfragen. Setzen Sie auf Innovation, die man sieht."
+  },
+  {
+    id: 2,
+    title: "Immobilien & Makler",
+    img: "/images/usecases/usecase3.webp", // New German Image
+    alt: "Digitales Schaufenster für Immobilien",
+    backTitle: "Verkauf rund um die Uhr",
+    backText: "Verwandeln Sie Ihr Schaufenster in einen 24/7-Verkäufer. Präsentieren Sie Ihre Immobilien-Exposés hell, bewegt und immer topaktuell auf hochauflösenden Displays. Bewegte Bilder ziehen Blicke magisch an und generieren wertvolle Interessenten, selbst wenn Ihr Büro längst geschlossen ist. Änderungen an Preisen oder Objektstatus sind dank zentraler Steuerung in Sekunden live – ohne teure Aushänge neu drucken zu müssen."
+  },
+  {
+    id: 3,
+    title: "Gastronomie & Menü",
+    img: "/images/usecases/usecase2.webp", // Placeholder (Restaurant)
+    alt: "Digitale Menükarte",
+    backTitle: "Appetit auf mehr",
+    backText: "Präsentieren Sie Ihre Speisen und Getränke so, dass Ihren Gästen das Wasser im Mund zusammenläuft. Mit digitalen Menüboards wechseln Sie im Handumdrehen vom Mittagsmenü zur Abendkarte, bewerben spontane Specials oder markieren ausverkaufte Gerichte sofort. Brillante Bilder und Animationen steigern nachweislich den Umsatz und machen Lust auf Zusatzverkäufe wie Desserts oder Drinks."
+  },
+  {
+    id: 4,
+    title: "KMU & Gewerbe",
+    img: "/images/usecases/usecase1.webp", // Placeholder (Retail)
+    alt: "Werbebildschirm im Laden",
+    backTitle: "Mehr Umsatz am POS",
+    backText: "Beeinflussen Sie die Kaufentscheidung genau dort, wo es zählt: am Point of Sale. Zeigen Sie Ihre aktuellen Aktionen, Neuheiten und Angebote direkt im Laden auf brillanten Screens. Bewegte Werbebotschaften verkaufen nachweislich besser als statische Plakate. Planen Sie Ihre Kampagnen bequem im Voraus und steuern Sie Inhalte für alle Filialen zentral per Mausklick – für maximale Verkaufsförderung."
+  },
+  {
+    id: 5,
+    title: "Gemeinden & Verwaltung",
+    img: "/images/usecases/usecase6.webp", // Placeholder (Municipal)
+    alt: "Digitale Amtstafel",
+    backTitle: "Infos schnell & papierlos",
+    backText: "Modernisieren Sie Ihre Bürgerkommunikation und ersetzen Sie den veralteten Aushangkasten. Veröffentlichen Sie Baugesuche, Einladungen zur Gemeindeversammlung oder wichtige Notfallinformationen sofort digital und gut sichtbar. Das spart nicht nur wertvolle Zeit und laufende Druckkosten, sondern signalisiert Ihren Bürgern auch, dass Ihre Gemeinde transparent, effizient und zukunftsorientiert arbeitet."
+  },
+  {
+    id: 6,
+    title: "Mitarbeiter-Infos",
+    img: "/images/usecases/usecase7.webp", // New German Image (Needs check)
+    alt: "Infoboard im Pausenraum",
+    backTitle: "Alle auf dem gleichen Stand",
+    backText: "Verbessern Sie die interne Kommunikation mit einem digitalen Schwarzen Brett. Teilen Sie wichtige Kennzahlen, Geburtstage, Schichtpläne oder Sicherheitsunterweisungen direkt im Pausenraum oder in der Produktion. So erreichen Sie effizient auch Mitarbeiter ohne eigenen PC-Arbeitsplatz, vermeiden Informationslücken und stärken nachhaltig das Wir-Gefühl und die Motivation in Ihrem gesamten Unternehmen."
+  },
 ];
 
 export default function UseCases() {
   const [index, setIndex] = useState(0);
   const [flipped, setFlipped] = useState<number | null>(null);
+  const [lightbox, setLightbox] = useState<string | null>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<number | null>(null);
 
@@ -49,7 +90,7 @@ export default function UseCases() {
   const go = (i: number) => setIndex(i);
 
   return (
-    <section id="usecases" className="py-10 md:py-14">
+    <section id="loesungen" className="py-10 md:py-14 scroll-mt-24">
       <div className="mx-auto max-w-screen-xl px-4">
         <div className="mb-5 flex items-center justify-between">
           <h2 className="text-2xl font-bold md:text-3xl">Anwendungsbereiche</h2>
@@ -76,25 +117,31 @@ export default function UseCases() {
               <figure key={s.id} className="w-full shrink-0 p-2">
                 {/* feste responsive Höhe => keine abgeschnittenen Bilder */}
                 <div
-                  className={`relative w-full h-[56vw] min-h-[260px] max-h-[520px] [transform-style:preserve-3d] [transition:transform_.6s] ${
-                    flipped === s.id ? "[transform:rotateY(180deg)]" : ""
-                  }`}
+                  className={`relative w-full h-[56vw] min-h-[260px] max-h-[520px] [transform-style:preserve-3d] [transition:transform_.6s] ${flipped === s.id ? "[transform:rotateY(180deg)]" : ""
+                    }`}
                   aria-label={s.title}
                 >
                   {/* Front */}
                   <div className="absolute inset-0 overflow-hidden rounded-2xl bg-black/5 [backface-visibility:hidden]">
                     <div className="absolute inset-0 grid place-items-center bg-black/80">
-                      <img
-                        src={s.img}
-                        alt={s.alt}
-                        className="max-h-full max-w-full object-contain"
-                        draggable={false}
-                        loading="lazy"
-                      />
+                      <button
+                        type="button"
+                        onClick={(e) => { e.stopPropagation(); setLightbox(s.img); }}
+                        className="h-full w-full cursor-zoom-in"
+                        aria-label={`${s.title} vergrößern`}
+                      >
+                        <img
+                          src={s.img}
+                          alt={s.alt}
+                          className="max-h-full max-w-full object-cover"
+                          draggable={false}
+                          loading="lazy"
+                        />
+                      </button>
                     </div>
                     {/* gut lesbares Label */}
-                    <div className="absolute inset-x-0 bottom-0 p-4">
-                      <div className="inline-flex items-center rounded-md bg-black/70 px-2.5 py-1.5 text-white backdrop-blur">
+                    <div className="absolute inset-x-0 bottom-0 p-4 pointer-events-none">
+                      <div className="inline-flex items-center rounded-md bg-black/70 px-2.5 py-1.5 text-white backdrop-blur pointer-events-auto">
                         <span className="text-[15px] font-semibold">{s.title}</span>
                         <button
                           className="ml-3 rounded bg-white/90 px-3 py-1.5 text-xs font-semibold text-slate-900 hover:bg-white"
@@ -107,13 +154,13 @@ export default function UseCases() {
                   </div>
 
                   {/* Back */}
-                  <div className="absolute inset-0 rounded-2xl bg-white p-5 text-slate-800 [backface-visibility:hidden] [transform:rotateY(180deg)]">
+                  <div className="absolute inset-0 rounded-2xl bg-white p-6 text-slate-800 [backface-visibility:hidden] [transform:rotateY(180deg)] overflow-y-auto">
                     <div className="flex h-full flex-col">
                       <h3 className="text-xl font-bold">{s.backTitle}</h3>
-                      <p className="mt-2 text-[15px] leading-relaxed">{s.backText}</p>
-                      <div className="mt-auto pt-4">
+                      <p className="mt-4 text-[16px] leading-relaxed text-slate-600">{s.backText}</p>
+                      <div className="mt-auto pt-6">
                         <button
-                          className="rounded-md border px-3 py-1.5 text-sm font-semibold hover:bg-slate-50"
+                          className="rounded-md border px-4 py-2 text-sm font-semibold hover:bg-slate-50"
                           onClick={(e) => { e.stopPropagation(); setFlipped(null); }}
                         >
                           Zurück
@@ -147,6 +194,31 @@ export default function UseCases() {
           </div>
         </div>
       </div>
+
+      {/* Lightbox */}
+      {lightbox && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 grid place-items-center bg-black/90 p-4 backdrop-blur-sm"
+          onClick={() => setLightbox(null)}
+          onKeyDown={(e) => e.key === "Escape" && setLightbox(null)}
+          tabIndex={-1}
+        >
+          <img
+            src={lightbox}
+            alt="Vollbildansicht"
+            className="max-h-[95vh] max-w-[95vw] rounded shadow-2xl"
+          />
+          <button
+            className="absolute top-4 right-4 text-white hover:text-slate-300"
+            onClick={() => setLightbox(null)}
+            aria-label="Schließen"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+      )}
     </section>
   );
 }

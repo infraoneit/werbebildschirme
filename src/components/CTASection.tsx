@@ -1,40 +1,29 @@
-export default function CTASection(){
+export default function CTASection() {
   return (
     <section id="demo" className="py-12">
       <div className="mx-auto max-w-screen-xl px-4 md:px-6">
-        <div className="rounded-2xl bg-gradient-to-br from-[--infra-green]/10 to-emerald-50 p-6 shadow">
-          <div className="grid items-center gap-5 sm:grid-cols-2">
+        <div className="rounded-2xl bg-gradient-to-br from-[--infra-green]/10 to-emerald-50 p-8 shadow text-center md:text-left">
+          <div className="grid items-center gap-6 md:grid-cols-2">
             <div>
-              <h2 className="m-0 text-2xl font-black">Jetzt kostenlose Demo buchen</h2>
-              <p className="m-0 text-slate-700">Live: Upload → Vorlage → Display. 15 Minuten reichen.</p>
-              <div className="mt-3 text-sm text-slate-700">
-                <strong>Weitere Dienstleistungen von InfraOne:</strong>
-                <ul className="ml-5 list-disc">
-                  <li>IT-Infrastruktur & Netzwerk (On-Prem & Cloud)</li>
-                  <li>Sicherheit & Monitoring</li>
-                  <li>WLAN, VPN & Standortvernetzung</li>
-                  <li>Server, Storage & Virtualisierung</li>
-                  <li>Managed Services & Support</li>
-                  <li>Telefonie & Kommunikation</li>
-                  <li>Kontrollraumlösungen</li>
-                  <li>IT-Betreuung & Outsourcing</li>
-                  <li>Webdesign</li>
-                  <li>Videoüberwachung</li>
-                  <li>Gebäudeautomation & IoT</li>
-                </ul>
-                <p className="mt-2">Mehr dazu auf unserer <a className="underline" href="https://www.infraone.ch/" target="_blank" rel="noreferrer">Hauptseite</a>.</p>
-              </div>
+              <h2 className="m-0 text-3xl font-black">Starte jetzt dein Projekt</h2>
+              <p className="mt-3 text-lg text-slate-700">
+                Lass uns sprechen. In 15 Minuten zeigen wir dir, wie einfach es geht.
+                Egal ob ein Display oder hundert.
+              </p>
             </div>
-            <div className="sm:text-right">
+            <div className="flex flex-col gap-3 sm:flex-row md:justify-end">
               <a
                 href="#"
-                onClick={(e)=>{e.preventDefault();window.dispatchEvent(new CustomEvent("open-consult"));}}
-                className="btn btn-primary"
+                onClick={(e) => { e.preventDefault(); window.dispatchEvent(new CustomEvent("open-consult")); }}
+                className="inline-flex items-center justify-center rounded-xl bg-[#3D9646] px-6 py-3.5 text-lg font-bold text-white shadow-lg hover:brightness-105"
               >
-                Demo buchen
+                Beratung buchen
               </a>
-              <a href="/whitepaper/index.html" target="_blank" rel="noreferrer" className="btn btn-secondary ml-2">
-                Whitepaper
+              <a
+                href="tel:+41XXXXXXXXX"
+                className="inline-flex items-center justify-center rounded-xl border-2 border-slate-200 px-6 py-3.5 text-lg font-bold text-slate-700 hover:bg-slate-50"
+              >
+                Anrufen
               </a>
             </div>
           </div>

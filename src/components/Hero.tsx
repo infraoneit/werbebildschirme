@@ -30,30 +30,31 @@ export default function Hero() {
         {/* === HEADLINE + CTAs === */}
         <div className="relative z-10 flex h-full items-center">
           <div className="mx-auto max-w-screen-xl px-4 text-center text-white md:px-6">
-            <h1 className="m-0 text-[28px] font-black leading-tight sm:text-[36px] md:text-5xl">
-              Werbebildschirme Schweiz –{" "}
-              <span className="opacity-95">Digital Signage einfach gemacht</span>
-            </h1>
-            <p className="mx-auto mt-4 max-w-3xl text-[16px] leading-relaxed sm:text-[18px] md:text-[19px]">
-              Sie wollen Inhalte klar präsentieren? <strong>Wir liefern Displays, Player &amp; CMS</strong> –
-              einsatzbereit, mit Schweizer Hosting oder lokal ohne Abo. Änderungen jederzeit im Browser.
-            </p>
+            <div className="mx-auto max-w-4xl rounded-3xl bg-black/40 p-6 backdrop-blur-sm sm:p-10">
+              <h1 className="m-0 text-[28px] font-black leading-tight sm:text-[36px] md:text-5xl drop-shadow-lg">
+                Werbebildschirme Schweiz <br className="hidden md:block" />
+                <span className="text-infra-green drop-shadow-xl">Digital Signage perfekt inszeniert.</span>
+              </h1>
+              <p className="mx-auto mt-6 max-w-2xl text-[16px] leading-relaxed sm:text-[18px] md:text-[20px] text-white drop-shadow-md">
+                Ihre Botschaft, die ankommt. Ob im Schaufenster, am Empfang oder im Büro – wir bieten <strong>Komplettlösungen aus der Schweiz</strong>. Einfach, zuverlässig und effektiv.
+              </p>
 
-            {/* CTAs */}
-            <div className="mt-6 flex flex-wrap justify-center gap-3">
-              <Link href="#pakete" className="btn btn-primary">
-                Angebote ansehen
-              </Link>
-              <a
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-                  window.dispatchEvent(new CustomEvent("open-consult"));
-                }}
-                className="btn btn-secondary"
-              >
-                Kostenloses Beratungsgespräch
-              </a>
+              {/* CTAs */}
+              <div className="mt-6 flex flex-wrap justify-center gap-3">
+                <Link href="#preise" className="btn btn-primary">
+                  Angebote ansehen
+                </Link>
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    window.dispatchEvent(new CustomEvent("open-consult"));
+                  }}
+                  className="btn btn-secondary"
+                >
+                  Kostenloses Beratungsgespräch
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -76,19 +77,39 @@ export default function Hero() {
             </p>
 
             {/* Kacheln */}
-            <div className="mt-5 grid gap-3 sm:grid-cols-3">
-              <InfoTile
-                title="🖥️ Displays in allen Formaten"
-                text="Indoor, Schaufenster (High-Brightness), Spezialgrössen inkl. Zubehör."
-              />
-              <InfoTile
-                title="📦 Player & CMS inklusive"
-                text="Vorlagen, Playlists, Zeitpläne – in Minuten startklar."
-              />
-              <InfoTile
-                title={<>Schweizer Hosting &amp; Webzugriff</>}
-                text="Sicher, schnell, skalierbar. Alternativ: lokaler Mini-Server."
-              />
+            <div className="mt-8 grid gap-8 sm:grid-cols-3">
+              <div className="flex flex-col items-center sm:flex-row sm:items-start sm:text-left gap-4">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-white/20 shadow-inner backdrop-blur-sm">
+                  {/* Display Icon */}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="14" x="2" y="3" rx="2" /><line x1="8" x2="16" y1="21" y2="21" /><line x1="12" x2="12" y1="17" y2="21" /></svg>
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold leading-tight">Displays & Hardware</h3>
+                  <p className="mt-1 text-sm text-white/90 leading-snug">Professionelle Screens (24/7). Hell, robust und langlebig.</p>
+                </div>
+              </div>
+
+              <div className="flex flex-col items-center sm:flex-row sm:items-start sm:text-left gap-4">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-white/20 shadow-inner backdrop-blur-sm">
+                  {/* CMS / Software Icon */}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9" /><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" /></svg>
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold leading-tight">Software & Content</h3>
+                  <p className="mt-1 text-sm text-white/90 leading-snug">Kinderleichte Verwaltung. Vorlagen im eigenen Design inklusive.</p>
+                </div>
+              </div>
+
+              <div className="flex flex-col items-center sm:flex-row sm:items-start sm:text-left gap-4">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-white/20 shadow-inner backdrop-blur-sm">
+                  {/* Swiss Service Icon (Shield/Check) */}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><path d="m9 12 2 2 4-4" /></svg>
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold leading-tight">Schweizer Service</h3>
+                  <p className="mt-1 text-sm text-white/90 leading-snug">Beratung, Installation und Support direkt aus der Schweiz.</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -97,17 +118,4 @@ export default function Hero() {
   );
 }
 
-function InfoTile({
-  title,
-  text,
-}: {
-  title: React.ReactNode;
-  text: string;
-}) {
-  return (
-    <div className="rounded-xl bg-white/12 p-4 text-white shadow-inner ring-1 ring-white/20">
-      <h3 className="m-0 text-[15.5px] font-bold sm:text-base">{title}</h3>
-      <p className="m-0 mt-1 text-[13.5px] sm:text-[14.5px]">{text}</p>
-    </div>
-  );
-}
+

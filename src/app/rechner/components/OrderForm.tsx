@@ -69,7 +69,7 @@ export default function OrderForm({
   }
 
   return (
-    <form className="panel grid gap-3" onSubmit={onSubmit}>
+    <form className="panel grid gap-3 force-light" onSubmit={onSubmit}>
       <div className="grid sm:grid-cols-2 gap-3">
         <label className="grid gap-1">
           <span className="font-semibold">Name *</span>
@@ -78,6 +78,7 @@ export default function OrderForm({
             required
             value={data.name}
             onChange={(e) => up("name", e.target.value)}
+            className="input"
           />
         </label>
 
@@ -88,6 +89,7 @@ export default function OrderForm({
             required
             value={data.email}
             onChange={(e) => up("email", e.target.value)}
+            className="input"
           />
         </label>
       </div>
@@ -99,6 +101,7 @@ export default function OrderForm({
             type="tel"
             value={data.phone ?? ""}
             onChange={(e) => up("phone", e.target.value)}
+            className="input"
           />
         </label>
 
@@ -108,6 +111,7 @@ export default function OrderForm({
             type="text"
             value={data.company ?? ""}
             onChange={(e) => up("company", e.target.value)}
+            className="input"
           />
         </label>
       </div>
@@ -119,6 +123,7 @@ export default function OrderForm({
           placeholder="Strasse, Nr."
           value={data.address ?? ""}
           onChange={(e) => up("address", e.target.value)}
+          className="input"
         />
       </label>
 
@@ -132,6 +137,7 @@ export default function OrderForm({
             onChange={(e) => up("bill_email", e.target.value)}
             placeholder={data.sameMail ? "(= Bestell-E-Mail)" : ""}
             disabled={data.sameMail}
+            className="input"
           />
         </label>
 
@@ -156,6 +162,7 @@ export default function OrderForm({
             value={data.bill_street ?? ""}
             onChange={(e) => up("bill_street", e.target.value)}
             disabled={data.sameAddr}
+            className="input"
           />
         </label>
         <label className="grid gap-1">
@@ -166,6 +173,7 @@ export default function OrderForm({
             value={data.bill_city ?? ""}
             onChange={(e) => up("bill_city", e.target.value)}
             disabled={data.sameAddr}
+            className="input"
           />
         </label>
       </div>
@@ -179,6 +187,7 @@ export default function OrderForm({
             value={data.ship_street ?? ""}
             onChange={(e) => up("ship_street", e.target.value)}
             disabled={data.sameAddr}
+            className="input"
           />
         </label>
         <label className="grid gap-1">
@@ -189,6 +198,7 @@ export default function OrderForm({
             value={data.ship_city ?? ""}
             onChange={(e) => up("ship_city", e.target.value)}
             disabled={data.sameAddr}
+            className="input"
           />
         </label>
       </div>
@@ -210,6 +220,7 @@ export default function OrderForm({
           rows={3}
           value={data.notes ?? ""}
           onChange={(e) => up("notes", e.target.value)}
+          className="input"
         />
       </label>
 
